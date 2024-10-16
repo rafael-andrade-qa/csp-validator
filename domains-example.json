@@ -1,0 +1,5 @@
+{
+  "default-src": ["https://example.com"],
+  "script-src": ["https://scripts.example.com", "https://cdn.example.com"],
+  "img-src": ["https://images.example.com"]
+}
