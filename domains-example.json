@@ -1,5 +1,32 @@
 {
-  "default-src": ["https://example.com"],
-  "script-src": ["https://scripts.example.com", "https://cdn.example.com"],
-  "img-src": ["https://images.example.com"]
+    "default-src": [
+        "*"
+    ],
+    "script-src": [
+        "'self'"
+    ],
+    "object-src": [
+        "'none'"
+    ],
+    "img-src": [
+        "'self'"
+    ],
+    "style-src": [
+        "'unsafe-inline'"
+    ],
+    "connect-src": [
+        "'self'"
+    ],
+    "worker-src": [
+        "'self'"
+    ],
+    "font-src": [
+        "'self'"
+    ],
+    "frame-ancestors": [
+        "'self'"
+    ],
+    "report-uri": [
+        ""
+    ]
 }

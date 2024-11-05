@@ -4,7 +4,11 @@ import sys
 
 def fetch_csp(url):
     print(f"\n🔄 Fetching GET request for URL: {url}")
-    response = requests.get(url)
+    try:
+        response = requests.get(url, timeout=10)
+    except requests.RequestException as e:
+        print(f"❌ Error fetching URL {url}: {e}")
+        return None
     
     if response.status_code == 200:
         print(f"✅ Request successful! Status code: {response.status_code}")
@@ -15,7 +19,6 @@ def fetch_csp(url):
             print(f"✅ 'Content-Security-Policy' found!\n")
             print(f"🔑 Original CSP:\n{csp}\n")
             
-            print("🔄 Converting 'Content-Security-Policy' to JSON-like dictionary...\n")
             csp_policies = {}
             for policy in csp.split(';'):
                 directive, *sources = policy.strip().split(' ')
@@ -69,8 +72,8 @@ def validate_csp(csp_policies, required_domains):
 
     return results
 
-def print_summary(results):
-    print("📋 Summary of CSP Validation:")
+def print_summary(url, results):
+    print(f"📋 Summary of CSP Validation for {url}:")
     for directive, result in results.items():
         if result['status'] == 'passed':
             print(f"✅ '{directive}': All required domains are present.")
@@ -78,33 +81,43 @@ def print_summary(results):
             print(f"❌ '{directive}': Missing domains: {', '.join(result['missing'])}")
         elif result['status'] == 'absent':
             print(f"❌ '{directive}': Directive is absent in the extracted CSP.")
-    
     print()
 
 def main():
     if len(sys.argv) != 3:
-        print("❌ Correct usage: python script.py <URL> <path_to_json>")
+        print("❌ Correct usage: python script.py <path_to_urls_json> <path_to_domains_json>")
         sys.exit(1)
 
-    url = sys.argv[1]
-    json_file = sys.argv[2]
+    urls_file = sys.argv[1]
+    domains_file = sys.argv[2]
 
-    print(f"\n🔄 Reading JSON file of domains: {json_file}\n")
     try:
-        with open(json_file, 'r') as f:
-            required_domains = json.load(f)
-        print(f"✅ JSON file loaded successfully! Content:\n{json.dumps(required_domains, indent=4)}\n")
-    except FileNotFoundError:
-        print(f"❌ Error: File '{json_file}' not found.")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print(f"❌ Error: File '{json_file}' is not a valid JSON.")
+        with open(urls_file, 'r') as f:
+            urls = json.load(f)
+        print(f"\n🔄 URLs JSON file loaded! URLs to process:\n{urls}\n")
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"❌ Error: Invalid URLs file '{urls_file}' or format is not JSON.")
         sys.exit(1)
 
-    csp_policies = fetch_csp(url)
-    if csp_policies:
-        results = validate_csp(csp_policies, required_domains)
-        print_summary(results)
+    try:
+        with open(domains_file, 'r') as f:
+            required_domains = json.load(f)
+        print(f"✅ Domains JSON file loaded successfully! Content:\n{json.dumps(required_domains, indent=4)}\n")
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"❌ Error: Invalid domains file '{domains_file}' or format is not JSON.")
+        sys.exit(1)
+
+    all_results = {}
+    for url in urls:
+        csp_policies = fetch_csp(url)
+        if csp_policies:
+            results = validate_csp(csp_policies, required_domains)
+            print_summary(url, results)
+            all_results[url] = results
+
+    with open("results.json", 'w') as f:
+        json.dump(all_results, f, indent=4)
+    print("\n📂 All results saved to 'results.json'")
 
 if __name__ == "__main__":
     main()

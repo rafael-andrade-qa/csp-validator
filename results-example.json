@@ -1,0 +1,86 @@
+{
+    "https://example.com.br": {
+        "default-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "script-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "object-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "img-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "style-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "connect-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "worker-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "font-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "frame-ancestors": {
+            "status": "passed",
+            "missing": []
+        },
+        "report-uri": {
+            "status": "passed",
+            "missing": []
+        }
+    },
+    "https://anotherexample.com": {
+        "default-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "script-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "object-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "img-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "style-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "connect-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "worker-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "font-src": {
+            "status": "passed",
+            "missing": []
+        },
+        "frame-ancestors": {
+            "status": "passed",
+            "missing": []
+        },
+        "report-uri": {
+            "status": "passed",
+            "missing": []
+        }
+    }
+}

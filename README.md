@@ -19,6 +19,10 @@ This is a Python project that validates if the `Content-Security-Policy` (CSP) o
 1. Check if Python is installed: Open your terminal and run the following command to check if Python is installed:
 
    ```bash
+   python3 --version
+   ```
+
+   ```bash
    python --version
    ```
 
@@ -27,10 +31,18 @@ This is a Python project that validates if the `Content-Security-Policy` (CSP) o
 2. Run the following command to create a virtual environment named `venv`:
 
    ```bash
+   python3 -m venv venv
+   ```
+
+   ```bash
    python -m venv venv
    ```
 
 3. Activate the virtual environment using the command:
+
+   ```bash
+   source venv/bin/activate
+   ```
 
    ```bash
    .\venv\Scripts\activate
@@ -42,12 +54,23 @@ This is a Python project that validates if the `Content-Security-Policy` (CSP) o
 - Install the dependencies listed in the `requirements.txt` file using the following command:
 
    ```bash
+   pip3 install -r requirements.txt
+   ```
+
+   ```bash
    pip install -r requirements.txt
    ```
 
 ## Running
 
 To run, open a terminal and navigate to your project's root directory. Then, execute the following command:
+
    ```bash
-   python csp_validator.py <URL> <path_to_json>
+   python3 csp_validator.py urls-example.json domains-example.json
    ```
+
+   ```bash
+   python csp_validator.py urls-example.json domains-example.json
+   ```
+
+
